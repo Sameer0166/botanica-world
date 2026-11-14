@@ -2,7 +2,7 @@
 
 An interactive, zero-cost educational web app designed to help students visually identify, pronounce, spell, and remember **220 edible plants, spices, herbs, grains, seeds, and nuts**—along with their real-world uses and nutrition superpowers.
 
-🔗 **Live Website:** `https://<your-username>.github.io/botanica-world/` *(Replace `<your-username>` with your GitHub username)*
+🔗 **Live Website:**  https://sameer0166.github.io/botanica-world/
 
 ---
 
