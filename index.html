@@ -476,7 +476,32 @@
     body.mode-photo .card-visual img.real-photo.loaded + .svg-art {
       display: none;
     }
-
+.hero-top-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.companion-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 41, 66, 0.92);
+  color: #e0f2fe;
+  text-decoration: none;
+  border: 1px solid rgba(186, 230, 253, 0.45);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.companion-link:hover {
+  background: #153b5c;
+  transform: translateY(-1px);
+}
     .cat-badge {
       position: absolute;
       top: 10px;
@@ -1158,6 +1183,12 @@
       <div class="hero-top">
         <div>
           <div class="brand-pill">Free Student Visual &amp; Audio Encyclopedia &bull; 220 Edible Species</div>
+          <div class="hero-top-row">
+            <div class="brand-pill">Free Student Visual &amp; Audio Encyclopedia &bull; 220 Edible Species</div>
+            <a class="companion-link" href="https://sameer0166.github.io/fauna-world/">
+              🐟 Switch to Fauna &amp; Seafood World (225 Species) ⇄
+            </a>
+          </div>
           <h1>Botanica World: Vegetables, Fruits, Spices, Herbs &amp; Seeds</h1>
           <p>
             Every major edible plant group on Earth—each with its own individual image, Slow &amp; Fast name pronunciation for easy spelling, regional market names, nutrition superpowers, real-world uses, origins, and an interactive quiz arena.
