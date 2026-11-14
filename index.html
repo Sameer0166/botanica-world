@@ -88,6 +88,10 @@
       margin-bottom: 0.65rem;
     }
 
+    .hero-top-row .brand-pill {
+      margin-bottom: 0;
+    }
+
     .hero h1 {
       font-size: clamp(1.65rem, 3.1vw, 2.48rem);
       font-weight: 800;
@@ -161,6 +165,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .stat-box:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.34);
+      transform: translateY(-2px);
     }
 
     .stat-box .num {
@@ -476,32 +488,36 @@
     body.mode-photo .card-visual img.real-photo.loaded + .svg-art {
       display: none;
     }
-.hero-top-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.companion-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(15, 41, 66, 0.92);
-  color: #e0f2fe;
-  text-decoration: none;
-  border: 1px solid rgba(186, 230, 253, 0.45);
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 600;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-.companion-link:hover {
-  background: #153b5c;
-  transform: translateY(-1px);
-}
+
+    .hero-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .companion-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 41, 66, 0.92);
+      color: #e0f2fe;
+      text-decoration: none;
+      border: 1px solid rgba(186, 230, 253, 0.45);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .companion-link:hover {
+      background: #153b5c;
+      transform: translateY(-1px);
+    }
+
     .cat-badge {
       position: absolute;
       top: 10px;
@@ -1182,7 +1198,6 @@
     <div class="container">
       <div class="hero-top">
         <div>
-          <div class="brand-pill">Free Student Visual &amp; Audio Encyclopedia &bull; 220 Edible Species</div>
           <div class="hero-top-row">
             <div class="brand-pill">Free Student Visual &amp; Audio Encyclopedia &bull; 220 Edible Species</div>
             <a class="companion-link" href="https://sameer0166.github.io/fauna-world/">
@@ -1214,35 +1229,35 @@
       </div>
 
       <div class="stats-ribbon">
-        <div class="stat-box">
+        <div class="stat-box" data-target-cat="vegetables" role="button" tabindex="0" title="View all 55 Edible Vegetables">
           <div>
             <div class="num" id="statVeg">55</div>
             <div class="lbl">Edible Vegetables</div>
           </div>
           <span style="font-size:1.45rem;">&#129365;</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" data-target-cat="fruits" role="button" tabindex="0" title="View all 62 Edible Fruits">
           <div>
             <div class="num" id="statFruit">62</div>
             <div class="lbl">Edible Fruits</div>
           </div>
           <span style="font-size:1.45rem;">&#127822;</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" data-target-cat="spices" role="button" tabindex="0" title="View all 50 Spices &amp; Herbs">
           <div>
             <div class="num" id="statSpice">50</div>
             <div class="lbl">Spices &amp; Herbs</div>
           </div>
           <span style="font-size:1.45rem;">&#127798;</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" data-target-cat="seeds" role="button" tabindex="0" title="View all 53 Seeds, Grains &amp; Nuts">
           <div>
             <div class="num" id="statSeed">53</div>
             <div class="lbl">Seeds, Grains &amp; Nuts</div>
           </div>
           <span style="font-size:1.45rem;">&#127806;</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box" data-target-cat="all" role="button" tabindex="0" title="View all 220 World Crops">
           <div>
             <div class="num" id="exploredStat">0 / 220</div>
             <div class="lbl">Cards Mastered</div>
@@ -2401,6 +2416,24 @@
 
       document.querySelectorAll(".tab-pill").forEach(btn => {
         btn.addEventListener("click", () => switchMainTab(btn.getAttribute("data-cat")));
+      });
+
+      document.querySelectorAll(".stats-ribbon .stat-box[data-target-cat]").forEach(box => {
+        const activateKpi = () => {
+          const targetCat = box.getAttribute("data-target-cat") || "all";
+          switchMainTab(targetCat);
+          const navBar = document.querySelector(".nav-bar");
+          if (navBar) {
+            navBar.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        };
+        box.addEventListener("click", activateKpi);
+        box.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            activateKpi();
+          }
+        });
       });
 
       document.getElementById("openQuizBtn").addEventListener("click", () => switchMainTab("quiz"));
