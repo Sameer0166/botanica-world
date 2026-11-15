@@ -1,34 +1,38 @@
-# 🌱 Botanica World — 220-Species Visual & Audio Plant Encyclopedia
+# 🌱 Botanica World — 220-Species Edible Plant Visual & Audio Encyclopedia
 
-An interactive, zero-cost educational web app designed to help students visually identify, pronounce, spell, and remember **220 edible plants, spices, herbs, grains, seeds, and nuts**—along with their real-world uses and nutrition superpowers.
+An interactive, single-page botanical encyclopedia cataloging **220 global edible plants, fruits, vegetables, grains, pulses, nuts, herbs, and spices** with real-world photography, botanical diagrams, regional names, audio pronunciation, printable study sheets, and a certificate-awarding quiz arena.
 
-🔗 **Live Website:**  https://sameer0166.github.io/botanica-world/
-
----
-
-## ✨ Key Features for Students
-
-* **220 Individual Edible Species:** Organized into 4 major groups—**Vegetables (55)**, **Fruits (62)**, **Spices & Herbs (50)**, and **Seeds, Grains & Nuts (53)**—each with its own photo and fallback botanical illustration.
-* **Slow & Fast Voice Pronunciation:** Every card includes **Slow** and **Fast** audio buttons so students can hear exact pronunciation and practice spelling difficult names.
-* **Nutrition Superpowers & Memory Clues:** Highlights key vitamins, minerals, and health benefits alongside simple visual memory tricks to help concepts stick.
-* **Regional & Botanical Context:** Includes common regional names (English, Hindi, Spanish), botanical names, edible plant parts, origins, and major growing regions.
-* **Student Study Tools:**
-  * **Student Mode:** Simplifies cards for younger learners.
-  * **Memory Hide:** Blurs plant names so students can test picture recall.
-  * **Revision List:** Star any card to build a custom exam study list.
-  * **Print Study Sheet:** Formats the current view into a clean printable worksheet.
-* **6-Mode Interactive Quiz Arena:** Includes *Picture Detective*, *Listen & Spell*, *Kitchen & World Uses*, *Nutrition Superpower*, *Origin & Soil Geography*, and *Grand Champion Mix*—complete with a printable **Certificate of Botanical Mastery** for scores of 70% or higher.
+🔗 **Live App:** [sameer0166.github.io/botanica-world](https://sameer0166.github.io/botanica-world/)  
+🐟 **Companion App:** [Fauna & Seafood World (225 Edible Species)](https://sameer0166.github.io/fauna-world/)
 
 ---
 
-## 🛠️ Built With
+## ✨ Key Features
 
-* **HTML5, CSS3 & Vanilla JavaScript** — Runs in a single standalone `index.html` file with no frameworks, servers, or paid dependencies required.
-* **Web Speech API** — Powers browser-native Slow and Fast pronunciation.
-* **Wikimedia REST API** — Loads individual specimen photography automatically with local browser caching.
+- **220 Global Edible Plant Specimens:** Covers fruits, leafy greens, root vegetables, cereals, legumes, nuts, seeds, culinary herbs, and aromatic spices with scientific taxonomy and regional names.
+- **Dual Visual Modes:** Switch seamlessly between real-world botanical photography and clean vector botanical illustrations.
+- **Interactive Learning & Memory Tools:**
+  - **🐢 Slow & ⚡ Fast Pronunciation:** Web Speech API pronunciation buttons on every plant card and detail modal.
+  - **Student Mode & Memory Hide:** Adapts descriptions for students and blurs plant names for active-recall flashcard practice.
+  - **Cue Cards & Spelling Breakdowns:** Inspect letter-by-letter spelling tiles, native origins, major growing regions, culinary uses, and key micronutrients.
+  - **Revision List & Mastery Tracking:** Bookmark tricky plants for revision and track mastered cards via `localStorage`.
+- **Interactive Quiz Arena & Certificate Export:**
+  - Multi-mode 10-question quizzes testing visual identification, spelling, nutrition, culinary uses, and botanical geography.
+  - Scoring **70% or higher** generates a personalized certificate with **instant PNG download** and **landscape PDF/print export**.
+- **Printable Study Sheets (`@media print`):** Clean 2-column print layout with page-break protection so students can export study guides as PDFs without UI clutter.
 
 ---
 
-## 📄 License
+## 🛠️ Tech Stack
 
-Distributed under the **MIT License**. Free for students, educators, and classrooms worldwide.
+- **Frontend:** Vanilla HTML5, CSS3 (CSS Grid, Flexbox, `@media print`), and ES6+ JavaScript (Zero dependencies)
+- **APIs & Browser Features:** Wikipedia REST API, Wikimedia Commons API, Web Speech Synthesis API, HTML5 Canvas API, and `localStorage`
+- **Hosting:** GitHub Pages
+
+---
+
+## 👨‍💻 Author
+
+**Mohd Sameer Pasha**  
+- GitHub: [@Sameer0166](https://github.com/Sameer0166)  
+- LinkedIn: [Mohd Sameer Pasha](https://www.linkedin.com/in/mohd-sameer-pasha-987785363)
