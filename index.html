@@ -1147,20 +1147,65 @@
       color: #7e5109;
     }
 
-    /* Printable Student Achievement Certificate */
+    /* Back-to-Home Navigation & Professional Student Certificate */
+    .btn-home-back {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #b4d4c2;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-home-back:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
     .certificate-box {
       display: none;
-      margin: 1.5rem auto;
-      padding: 2rem;
-      border: 6px double var(--primary);
-      border-radius: 16px;
-      background: radial-gradient(circle at center, #ffffff 60%, #f8f5eb 100%);
-      max-width: 680px;
-      text-align: center;
     }
 
     .certificate-box.show {
       display: block;
+    }
+
+    .pro-certificate {
+      position: relative;
+      margin: 1.5rem auto;
+      padding: 2.2rem 1.8rem;
+      border: 8px double #12422d;
+      outline: 2px solid #d4a017;
+      outline-offset: -14px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, #ffffff 55%, #fbf7ec 100%);
+      max-width: 720px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(18, 66, 45, 0.14);
+    }
+
+    .cert-seal {
+      width: 68px;
+      height: 68px;
+      margin: 0.85rem auto 0.2rem;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f6d365 0%, #d4a017 75%, #9c6b10 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      border: 3px dashed #fff8dc;
+      box-shadow: 0 4px 12px rgba(183, 121, 31, 0.35);
     }
 
     footer {
@@ -1172,22 +1217,31 @@
     }
 
     @media print {
-      .nav-bar, .hero-actions, .card-top-actions, .toolbar-info, .back-to-top, .audio-notice-banner, footer {
+      @page {
+        size: landscape;
+        margin: 0.4in;
+      }
+      body * {
+        visibility: hidden;
+      }
+      #certificateBox,
+      #certificateBox * {
+        visibility: visible;
+      }
+      #certificateBox {
+        position: fixed;
+        inset: 0;
+        margin: auto;
+        width: 100%;
+        max-width: 960px;
+        height: fit-content;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      #downloadCertPngBtn,
+      #printCertBtn {
         display: none !important;
-      }
-      body {
-        background: #ffffff;
-      }
-      .cards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.75rem;
-      }
-      .item-card {
-        break-inside: avoid;
-        box-shadow: none;
-      }
-      .card-visual {
-        height: 130px;
       }
     }
   </style>
@@ -1331,12 +1385,15 @@
     <!-- Interactive Quiz Arena View -->
     <section class="quiz-arena" id="quizArena">
       <div class="quiz-setup-card" id="quizSetup">
-        <span class="brand-pill" style="background:var(--accent-soft);color:var(--accent);border-color:#f5cba7;">
-          Student Interactive Challenge &amp; Spelling Arena
-        </span>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.65rem;margin-bottom:0.85rem;">
+          <button type="button" class="btn-home-back" id="setupBackHomeBtn">&larr; Back to Home (Encyclopedia)</button>
+          <span class="brand-pill" style="background:var(--accent-soft);color:var(--accent);border-color:#f5cba7;margin-bottom:0;">
+            Student Interactive Challenge &amp; Spelling Arena
+          </span>
+        </div>
         <h2 style="font-size:1.72rem;color:var(--primary);margin-bottom:0.35rem;">Test What You Have Learned!</h2>
         <p style="color:var(--text-secondary);">
-          Choose any quiz mode below. Every question displays an individual picture and gives instant memory feedback. Score 70% or higher to earn a printable certificate!
+          Choose any quiz mode below. Every participant receives a downloadable personalized certificate at the end of the quiz!
         </p>
 
         <div class="quiz-mode-grid" id="quizModes">
@@ -1374,7 +1431,7 @@
 
         <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;padding-top:0.85rem;border-top:1px solid var(--border);">
           <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
-            <input type="text" id="studentNameInput" class="control-input" placeholder="Student Name (for Certificate)" style="min-width:210px;" />
+            <input type="text" id="studentNameInput" class="control-input" placeholder="Enter Student Full Name (for Certificate)" style="min-width:250px;" />
             <select id="quizTopicSelect" class="control-input" aria-label="Quiz Topic">
               <option value="all">All Categories (220 Items)</option>
               <option value="vegetables">Vegetables Only (55 Items)</option>
@@ -1390,13 +1447,14 @@
 
       <div class="quiz-play-card" id="quizPlay" style="display:none;">
         <div class="quiz-hud">
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+            <button type="button" class="btn-home-back" id="playBackHomeBtn">&larr; Home</button>
             <span class="hud-badge" id="qProgress">Question 1 of 10</span>
             <span class="hud-badge hud-streak" id="qStreak">Streak: 0 &#128293;</span>
           </div>
           <div style="display:flex;gap:0.5rem;align-items:center;">
             <span class="hud-badge" id="qScore">Score: 0 pts</span>
-            <button class="sub-pill" id="quitQuizBtn">Exit Quiz</button>
+            <button class="sub-pill" id="quitQuizBtn">Change Mode</button>
           </div>
         </div>
 
@@ -1418,29 +1476,47 @@
       </div>
 
       <div class="quiz-result-card" id="quizResult" style="display:none;text-align:center;">
-        <div id="resultMedal" style="font-size:3.5rem;margin-bottom:0.5rem;">&#127942;</div>
+        <div style="text-align:left;margin-bottom:0.75rem;">
+          <button type="button" class="btn-home-back" id="resultBackHomeBtn">&larr; Back to Home (Encyclopedia)</button>
+        </div>
+        <div id="resultMedal" style="font-size:3.4rem;margin-bottom:0.4rem;">&#127942;</div>
         <h2 id="resultHeadline" style="font-size:1.85rem;color:var(--primary);margin-bottom:0.35rem;">Quiz Complete!</h2>
-        <p id="resultSub" style="color:var(--text-secondary);font-size:1.05rem;margin-bottom:1.25rem;"></p>
+        <p id="resultSub" style="color:var(--text-secondary);font-size:1.05rem;margin-bottom:1.15rem;"></p>
 
-        <div class="certificate-box" id="certificateBox">
-          <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--accent);font-weight:800;">
-            Botanica World Academy
+        <!-- Professional Certificate (Shown to ALL Participants) -->
+        <div class="certificate-box pro-certificate show" id="certificateBox">
+          <div style="font-size:0.78rem;text-transform:uppercase;letter-spacing:0.18em;color:#b7791f;font-weight:800;">
+            Botanica World Academy &bull; Official Credential
           </div>
-          <h3 style="font-family:Georgia,serif;font-size:1.75rem;color:var(--primary);margin:0.4rem 0;">
-            Certificate of Botanical Mastery
+          <h3 id="certAwardTitle" style="font-family:Georgia,serif;font-size:1.8rem;color:var(--primary);margin:0.45rem 0 0.25rem;">
+            Certificate of Botanical Achievement
           </h3>
-          <p style="font-size:0.9rem;color:var(--text-secondary);">This certifies that</p>
-          <div id="certStudentName" style="font-family:Georgia,serif;font-size:1.55rem;font-weight:700;color:var(--text-main);border-bottom:2px solid var(--border);display:inline-block;padding:0.2rem 2rem;margin:0.5rem 0;">
-            Junior Botanist
+          <p style="font-size:0.88rem;color:var(--text-secondary);font-style:italic;">This certificate is proudly presented to</p>
+          <div id="certStudentName" style="font-family:Georgia,serif;font-size:1.75rem;font-weight:700;color:#16221c;border-bottom:2px solid #d4a017;display:inline-block;padding:0.2rem 2.2rem;margin:0.55rem 0;">
+            Student Explorer
           </div>
-          <p id="certDetails" style="font-size:0.92rem;color:var(--text-secondary);margin:0.65rem 0 1rem;"></p>
-          <button class="sub-pill" id="printCertBtn">&#128424; Print / Save Certificate as PDF</button>
+          <p id="certDetails" style="font-size:0.94rem;color:var(--text-main);max-width:540px;margin:0.55rem auto 0.65rem;line-height:1.55;"></p>
+          <div style="display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:0.8rem;padding-top:0.75rem;border-top:1px solid #e5dec9;">
+            <div style="font-size:0.8rem;color:var(--text-secondary);">
+              <strong id="certDateText" style="display:block;color:var(--text-main);">Date</strong>
+              Issued Date
+            </div>
+            <div class="cert-seal">Official<br/>Seal</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);">
+              <strong style="display:block;color:var(--primary);font-family:Georgia,serif;">Botanica World</strong>
+              220-Species Atlas
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:0.65rem;flex-wrap:wrap;margin-top:1.25rem;">
+            <button type="button" class="btn btn-quiz" id="downloadCertPngBtn">&#11015; Download Certificate (PNG)</button>
+            <button type="button" class="tab-pill" id="printCertBtn">&#128424; Print / Save as PDF</button>
+          </div>
         </div>
 
         <div id="missedReview" style="text-align:left;margin:1.25rem 0;"></div>
         <div style="display:flex;justify-content:center;gap:0.85rem;flex-wrap:wrap;">
           <button class="btn btn-quiz" id="playAgainBtn">Play Another Round</button>
-          <button class="tab-pill" id="backToAtlasBtn">Back to Encyclopedia</button>
+          <button class="btn-home-back" id="backToAtlasBtn">&larr; Back to Home (Encyclopedia)</button>
         </div>
       </div>
     </section>
@@ -2378,12 +2454,22 @@
           modalStarBtn.innerHTML = starredIds.has(item.id) ? "&#9733; Saved in Revision" : "&#9734; Save to Revision";
         };
 
+        if (!flashModal.classList.contains("open") && window.history && window.history.pushState) {
+          window.history.pushState({ modal: true }, "", "#card");
+        }
         flashModal.classList.add("open");
       }
 
-      document.getElementById("closeModalBtn").addEventListener("click", () => flashModal.classList.remove("open"));
+      function closeFlashcardModal() {
+        flashModal.classList.remove("open");
+        if (window.location.hash === "#card" && window.history && window.history.back) {
+          window.history.back();
+        }
+      }
+
+      document.getElementById("closeModalBtn").addEventListener("click", closeFlashcardModal);
       flashModal.addEventListener("click", e => {
-        if (e.target === flashModal) flashModal.classList.remove("open");
+        if (e.target === flashModal) closeFlashcardModal();
       });
       document.getElementById("prevCardBtn").addEventListener("click", () => {
         openFlashcard((currentModalIdx - 1 + filteredList.length) % filteredList.length);
@@ -2394,13 +2480,13 @@
 
       document.addEventListener("keydown", e => {
         if (!flashModal.classList.contains("open")) return;
-        if (e.key === "Escape") flashModal.classList.remove("open");
+        if (e.key === "Escape") closeFlashcardModal();
         if (e.key === "ArrowLeft") openFlashcard((currentModalIdx - 1 + filteredList.length) % filteredList.length);
         if (e.key === "ArrowRight") openFlashcard((currentModalIdx + 1) % filteredList.length);
       });
 
-      // ==================== NAVIGATION & VIEW TOGGLES ====================
-      function switchMainTab(cat) {
+      // ==================== NAVIGATION, HISTORY & VIEW TOGGLES ====================
+      function switchMainTab(cat, fromPopState) {
         activeCat = cat;
         activeSub = "all";
         document.querySelectorAll(".tab-pill").forEach(b => b.classList.toggle("active", b.getAttribute("data-cat") === cat));
@@ -2410,9 +2496,33 @@
         document.getElementById("searchControls").style.display = isQuiz ? "none" : "flex";
         document.getElementById("quizArena").classList.toggle("active", isQuiz);
 
+        if (!fromPopState && window.history && window.history.pushState) {
+          if (cat !== "all") {
+            window.history.pushState({ view: cat }, "", `#${cat}`);
+          } else if (window.location.hash) {
+            window.history.pushState({ view: "all" }, "", window.location.pathname + window.location.search);
+          }
+        }
+
         renderSubPills();
         if (!isQuiz) renderGrid();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
+
+      window.addEventListener("popstate", () => {
+        if (flashModal.classList.contains("open")) {
+          flashModal.classList.remove("open");
+          return;
+        }
+        if (activeCat !== "all") {
+          switchMainTab("all", true);
+        }
+      });
+
+      ["setupBackHomeBtn", "playBackHomeBtn", "resultBackHomeBtn", "backToAtlasBtn"].forEach(btnId => {
+        const el = document.getElementById(btnId);
+        if (el) el.addEventListener("click", () => switchMainTab("all"));
+      });
 
       document.querySelectorAll(".tab-pill").forEach(btn => {
         btn.addEventListener("click", () => switchMainTab(btn.getAttribute("data-cat")));
@@ -2438,7 +2548,6 @@
 
       document.getElementById("openQuizBtn").addEventListener("click", () => switchMainTab("quiz"));
       document.getElementById("printSheetBtn").addEventListener("click", () => window.print());
-      document.getElementById("printCertBtn").addEventListener("click", () => window.print());
       searchInput.addEventListener("input", renderGrid);
       geoSelect.addEventListener("change", renderGrid);
 
@@ -2715,6 +2824,166 @@
         finalizeTurn(isRight);
       }
 
+      let lastCertData = {
+        studentName: "Student Explorer",
+        awardTitle: "Certificate of Botanical Achievement",
+        scoreText: "",
+        dateStr: ""
+      };
+
+      function buildCertificateCanvas() {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1200;
+        canvas.height = 850;
+        const ctx = canvas.getContext("2d");
+
+        // Background
+        const bgGrad = ctx.createRadialGradient(600, 320, 80, 600, 425, 750);
+        bgGrad.addColorStop(0, "#ffffff");
+        bgGrad.addColorStop(1, "#f7f2e4");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1200, 850);
+
+        // Outer Forest Green Border & Inner Gold Frame
+        ctx.strokeStyle = "#12422d";
+        ctx.lineWidth = 18;
+        ctx.strokeRect(32, 32, 1136, 786);
+
+        ctx.strokeStyle = "#d4a017";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(54, 54, 1092, 742);
+
+        // Header Subtitle
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#b7791f";
+        ctx.font = "bold 20px Inter, Arial, sans-serif";
+        ctx.fillText("BOTANICA WORLD ACADEMY  •  OFFICIAL CREDENTIAL", 600, 130);
+
+        // Main Certificate Title
+        ctx.fillStyle = "#12422d";
+        ctx.font = "bold 52px Georgia, serif";
+        ctx.fillText(lastCertData.awardTitle, 600, 210);
+
+        // Presented To
+        ctx.fillStyle = "#4a5b52";
+        ctx.font = "italic 24px Georgia, serif";
+        ctx.fillText("This certificate is proudly presented to", 600, 285);
+
+        // Student Name
+        ctx.fillStyle = "#16221c";
+        ctx.font = "bold 56px Georgia, serif";
+        ctx.fillText(lastCertData.studentName, 600, 375);
+
+        // Gold Underline
+        ctx.strokeStyle = "#d4a017";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(280, 398);
+        ctx.lineTo(920, 398);
+        ctx.stroke();
+
+        // Achievement Details
+        ctx.fillStyle = "#16221c";
+        ctx.font = "24px Inter, Arial, sans-serif";
+        ctx.fillText(lastCertData.scoreText, 600, 465);
+        ctx.fillStyle = "#4a5b52";
+        ctx.font = "21px Inter, Arial, sans-serif";
+        ctx.fillText("in the Botanica World 220-Species Edible Plant, Nutrition & Spelling Challenge.", 600, 505);
+
+        // Gold Seal
+        ctx.beginPath();
+        ctx.arc(600, 635, 56, 0, Math.PI * 2);
+        ctx.fillStyle = "#d4a017";
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#fff8dc";
+        ctx.stroke();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 16px Inter, Arial, sans-serif";
+        ctx.fillText("OFFICIAL", 600, 630);
+        ctx.fillText("SEAL", 600, 652);
+
+        // Footer Signatures & Date
+        ctx.fillStyle = "#16221c";
+        ctx.font = "bold 22px Georgia, serif";
+        ctx.fillText(lastCertData.dateStr, 260, 645);
+        ctx.fillText("Botanica World Academy", 940, 645);
+
+        ctx.fillStyle = "#4a5b52";
+        ctx.font = "17px Inter, Arial, sans-serif";
+        ctx.fillText("Date of Completion", 260, 675);
+        ctx.fillText("220-Species Visual & Audio Atlas", 940, 675);
+
+        return canvas;
+      }
+
+      function downloadCertificatePNG() {
+        const canvas = buildCertificateCanvas();
+        const safeFileName = lastCertData.studentName.replace(/[^a-z0-9]/gi, "_").toLowerCase() || "student";
+        const link = document.createElement("a");
+        link.download = `Botanica_Certificate_${safeFileName}.png`;
+        link.href = canvas.toDataURL("image/png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function printOrSaveCertificatePDF() {
+        const canvas = buildCertificateCanvas();
+        const dataUrl = canvas.toDataURL("image/png");
+        const printWin = window.open("", "_blank", "width=1050,height=780");
+
+        if (printWin) {
+          printWin.document.open();
+          printWin.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <title>Botanica Certificate - ${lastCertData.studentName}</title>
+  <style>
+    @page { size: landscape; margin: 0; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+    img {
+      max-width: 96vw;
+      max-height: 96vh;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <img id="certImg" src="${dataUrl}" alt="Botanica World Certificate" />
+  <script>
+    const img = document.getElementById("certImg");
+    const triggerPrint = () => {
+      window.focus();
+      window.print();
+    };
+    if (img.complete) {
+      setTimeout(triggerPrint, 150);
+    } else {
+      img.onload = () => setTimeout(triggerPrint, 150);
+    }
+  <\/script>
+</body>
+</html>`);
+          printWin.document.close();
+        } else {
+          window.print();
+        }
+      }
+
+      document.getElementById("downloadCertPngBtn").addEventListener("click", downloadCertificatePNG);
+      document.getElementById("printCertBtn").addEventListener("click", printOrSaveCertificatePDF);
+
       function finishQuiz() {
         document.getElementById("quizPlay").style.display = "none";
         const res = document.getElementById("quizResult");
@@ -2725,28 +2994,44 @@
         const pct = Math.round((correctCount / total) * 100);
 
         let medal = "&#127793;";
-        let title = "Junior Botanist Explorer!";
+        let title = "Botanica World Participant!";
+        let awardTitle = "Certificate of Botanical Participation";
         if (pct >= 90) {
           medal = "&#127942;";
           title = "Grand Master Botanist!";
+          awardTitle = "Certificate of Botanical Mastery";
         } else if (pct >= 70) {
           medal = "&#11088;";
           title = "Plant & Spice Scholar!";
+          awardTitle = "Certificate of Botanical Achievement";
         }
 
         document.getElementById("resultMedal").innerHTML = medal;
         document.getElementById("resultHeadline").textContent = title;
         document.getElementById("resultSub").textContent = `You answered ${correctCount} out of ${total} questions (${pct}%) correctly and earned ${qScore} points!`;
 
-        const certBox = document.getElementById("certificateBox");
-        if (pct >= 70) {
-          const sName = document.getElementById("studentNameInput").value.trim() || "Junior Botanist";
-          document.getElementById("certStudentName").textContent = sName;
-          document.getElementById("certDetails").textContent = `Successfully achieved ${pct}% (${qScore} points) on the Botanica World 220-Species Visual & Spelling Assessment.`;
-          certBox.classList.add("show");
-        } else {
-          certBox.classList.remove("show");
-        }
+        // Always populate and display the certificate for every participant
+        const rawName = document.getElementById("studentNameInput").value.trim();
+        const sName = rawName || "Student Explorer";
+        const todayStr = new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+        const scoreSummary = `For successfully completing the quiz with ${correctCount}/${total} correct (${pct}%) and earning ${qScore} points`;
+
+        lastCertData = {
+          studentName: sName,
+          awardTitle,
+          scoreText: scoreSummary,
+          dateStr: todayStr
+        };
+
+        document.getElementById("certAwardTitle").textContent = awardTitle;
+        document.getElementById("certStudentName").textContent = sName;
+        document.getElementById("certDetails").textContent = `${scoreSummary} in the Botanica World 220-Species Visual & Spelling Assessment.`;
+        document.getElementById("certDateText").textContent = todayStr;
+        document.getElementById("certificateBox").classList.add("show");
 
         const reviewBox = document.getElementById("missedReview");
         if (missedItems.length === 0) {
@@ -2782,7 +3067,6 @@
         document.getElementById("quizResult").style.display = "none";
         document.getElementById("quizSetup").style.display = "block";
       });
-      document.getElementById("backToAtlasBtn").addEventListener("click", () => switchMainTab("all"));
 
       // ==================== INITIALIZE APP ====================
       renderSubPills();
